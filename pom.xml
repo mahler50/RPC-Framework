@@ -13,6 +13,7 @@
         <module>example-consumer</module>
         <module>example-provider</module>
         <module>guazi-rpc-easy</module>
+        <module>guazi-rpc-core</module>
     </modules>
 
     <properties>
