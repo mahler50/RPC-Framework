@@ -8,9 +8,6 @@ import lombok.Data;
 @Data
 public class RpcConfig {
 
-    private RpcConfig() {
-    }
-
     /**
      * 名称
      */
@@ -30,4 +27,9 @@ public class RpcConfig {
      * 服务器端口号
      */
     private Integer serverPort = 8080;
+
+    /**
+     * 是否开启mock
+     */
+    private boolean mock = false;
 }
