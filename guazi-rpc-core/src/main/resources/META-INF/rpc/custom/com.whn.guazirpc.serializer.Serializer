@@ -1,0 +1,4 @@
+jdk=com.whn.guazirpc.serializer.JdkSerializer
+json=com.whn.guazirpc.serializer.JsonSerializer
+kryo=com.whn.guazirpc.serializer.KryoSerializer
+hessian=com.whn.guazirpc.serializer.HessianSerializer

@@ -1,5 +1,7 @@
 package com.whn.guazirpc.config;
 
+import com.whn.guazirpc.serializer.Serializer;
+import com.whn.guazirpc.serializer.SerializerKey;
 import lombok.Data;
 
 /**
@@ -32,4 +34,9 @@ public class RpcConfig {
      * 是否开启mock
      */
     private boolean mock = false;
+
+    /**
+     * 序列化器
+     */
+    private String serializer = SerializerKey.JDK;
 }
