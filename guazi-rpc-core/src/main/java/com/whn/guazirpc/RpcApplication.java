@@ -1,7 +1,10 @@
 package com.whn.guazirpc;
 
+import com.whn.guazirpc.config.RegistryConfig;
 import com.whn.guazirpc.config.RpcConfig;
 import com.whn.guazirpc.constant.RpcConstant;
+import com.whn.guazirpc.registry.Registry;
+import com.whn.guazirpc.registry.RegistryFactory;
 import com.whn.guazirpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +20,11 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig) {
         rpcConfig = newRpcConfig;
         log.info("rpc init, config = {}", rpcConfig.toString());
+        // 注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("registry init, config = {}", registryConfig);
     }
 
     /**

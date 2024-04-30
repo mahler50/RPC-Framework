@@ -1,7 +1,6 @@
 package com.whn.guazirpc.config;
 
-import com.whn.guazirpc.serializer.Serializer;
-import com.whn.guazirpc.serializer.SerializerKey;
+import com.whn.guazirpc.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -38,5 +37,10 @@ public class RpcConfig {
     /**
      * 序列化器
      */
-    private String serializer = SerializerKey.JDK;
+    private String serializer = SerializerKeys.JDK;
+
+    /**
+     *  注册中心配置
+     */
+    private RegistryConfig registryConfig;
 }

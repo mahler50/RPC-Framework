@@ -3,7 +3,7 @@ package com.whn.guazirpc.serializer;
 /**
  * 序列化器键名
  */
-public interface SerializerKey {
+public interface SerializerKeys {
 
     String JDK = "jdk";
     String JSON = "json";
