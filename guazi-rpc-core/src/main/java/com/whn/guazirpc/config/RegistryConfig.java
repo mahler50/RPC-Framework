@@ -1,5 +1,6 @@
 package com.whn.guazirpc.config;
 
+import com.whn.guazirpc.registry.RegistryKeys;
 import lombok.Data;
 
 /**
@@ -11,7 +12,7 @@ public class RegistryConfig {
     /**
      * 注册中心类型
      */
-    private String registry = "etcd";
+    private String registry = RegistryKeys.ETCD;
 
     /**
      * 注册中心地址

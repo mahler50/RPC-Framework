@@ -1,6 +1,7 @@
 package com.whn.guazirpc.model;
 
 import cn.hutool.core.util.StrUtil;
+import com.whn.guazirpc.constant.RpcConstant;
 import lombok.Data;
 
 /**
@@ -17,7 +18,7 @@ public class ServiceMetaInfo {
     /**
      * 服务版本号
      */
-    private String serviceVersion = "1.0";
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
 
     /**
      * 服务主机

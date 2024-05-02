@@ -1,1 +1,2 @@
 etcd=com.whn.guazirpc.registry.EtcdRegistry
+zookeeper=com.whn.guazirpc.registry.ZooKeeperRegistry
