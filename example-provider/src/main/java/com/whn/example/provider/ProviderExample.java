@@ -10,6 +10,7 @@ import com.whn.guazirpc.registry.Registry;
 import com.whn.guazirpc.registry.RegistryFactory;
 import com.whn.guazirpc.server.HttpServer;
 import com.whn.guazirpc.server.VertxHttpServer;
+import com.whn.guazirpc.server.tcp.VertxTcpServer;
 
 /**
  * 服务提供者示例
@@ -38,8 +39,8 @@ public class ProviderExample {
         }
 
         // 启动web服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
 
     }
 }
