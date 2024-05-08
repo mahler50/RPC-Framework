@@ -1,0 +1,3 @@
+roundRobin=com.whn.guazirpc.loadbalancer.RoundRobinLoadBalancer
+random=com.whn.guazirpc.loadbalancer.RandomLoadBalancer
+consistentHash=com.whn.guazirpc.loadbalancer.ConsistentHashLoadBalancer

@@ -1,5 +1,7 @@
 package com.whn.guazirpc.config;
 
+import com.whn.guazirpc.loadbalancer.LoadBalancer;
+import com.whn.guazirpc.loadbalancer.LoadBalancerKeys;
 import com.whn.guazirpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -43,4 +45,9 @@ public class RpcConfig {
      *  注册中心配置
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+
+    /**
+     * 负载均衡器
+     */
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 }
