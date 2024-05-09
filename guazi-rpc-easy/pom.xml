@@ -11,7 +11,7 @@
     <artifactId>guazi-rpc-easy</artifactId>
     <packaging>jar</packaging>
 
-    <name>guazo-rpc-esay</name>
+    <name>guazi-rpc-esay</name>
     <url>http://maven.apache.org</url>
 
     <properties>

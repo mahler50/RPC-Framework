@@ -1,0 +1,2 @@
+no=com.whn.guazirpc.fault.retry.NoRetryStrategy
+fixedInterval=com.whn.guazirpc.fault.retry.FixedIntervalRetryStrategy

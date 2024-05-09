@@ -1,33 +1,27 @@
 package com.whn.guazirpc.proxy;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.IdUtil;
 import com.whn.guazirpc.RpcApplication;
 import com.whn.guazirpc.config.RpcConfig;
 import com.whn.guazirpc.constant.RpcConstant;
+import com.whn.guazirpc.fault.retry.RetryStrategy;
+import com.whn.guazirpc.fault.retry.RetryStrategyFactory;
 import com.whn.guazirpc.loadbalancer.LoadBalancer;
 import com.whn.guazirpc.loadbalancer.LoadBalancerFactory;
 import com.whn.guazirpc.model.RpcRequest;
 import com.whn.guazirpc.model.RpcResponse;
 import com.whn.guazirpc.model.ServiceMetaInfo;
-import com.whn.guazirpc.protocol.*;
 import com.whn.guazirpc.registry.Registry;
 import com.whn.guazirpc.registry.RegistryFactory;
 import com.whn.guazirpc.serializer.Serializer;
 import com.whn.guazirpc.serializer.SerializerFactory;
 import com.whn.guazirpc.server.tcp.VertxTcpClient;
-import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.net.NetClient;
-import io.vertx.core.net.NetSocket;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 服务代理
@@ -75,7 +69,11 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发送 TCP 请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
+            // 使用重试机制
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+            RpcResponse rpcResponse = retryStrategy.doRetry(() ->
+                    VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
+            );
             return rpcResponse.getData();
         } catch (Exception e) {
             throw new RuntimeException("调用失败");
