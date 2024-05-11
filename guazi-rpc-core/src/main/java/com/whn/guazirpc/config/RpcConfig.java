@@ -1,6 +1,8 @@
 package com.whn.guazirpc.config;
 
 import com.whn.guazirpc.fault.retry.RetryStrategyKeys;
+import com.whn.guazirpc.fault.tolerant.TolerantStrategy;
+import com.whn.guazirpc.fault.tolerant.TolerantStrategyKeys;
 import com.whn.guazirpc.loadbalancer.LoadBalancer;
 import com.whn.guazirpc.loadbalancer.LoadBalancerKeys;
 import com.whn.guazirpc.serializer.SerializerKeys;
@@ -56,4 +58,9 @@ public class RpcConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKeys.NO;
+
+    /**
+     * 容错策略
+     */
+    private String tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
 }

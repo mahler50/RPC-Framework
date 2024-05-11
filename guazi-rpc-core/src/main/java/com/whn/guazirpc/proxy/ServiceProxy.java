@@ -6,6 +6,8 @@ import com.whn.guazirpc.config.RpcConfig;
 import com.whn.guazirpc.constant.RpcConstant;
 import com.whn.guazirpc.fault.retry.RetryStrategy;
 import com.whn.guazirpc.fault.retry.RetryStrategyFactory;
+import com.whn.guazirpc.fault.tolerant.TolerantStrategy;
+import com.whn.guazirpc.fault.tolerant.TolerantStrategyFactory;
 import com.whn.guazirpc.loadbalancer.LoadBalancer;
 import com.whn.guazirpc.loadbalancer.LoadBalancerFactory;
 import com.whn.guazirpc.model.RpcRequest;
@@ -63,17 +65,28 @@ public class ServiceProxy implements InvocationHandler {
             }
 
             // 负载均衡
-            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            LoadBalancer loadBalancer
+                    = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
             // 将调用方法名作为负载均衡参数
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发送 TCP 请求
             // 使用重试机制
-            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
-            RpcResponse rpcResponse = retryStrategy.doRetry(() ->
-                    VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
-            );
+            RpcResponse rpcResponse;
+            try {
+                RetryStrategy retryStrategy
+                        = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+                rpcResponse = retryStrategy.doRetry(() ->
+                        VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
+                );
+            } catch (Exception e) {
+                // 容错策略
+                TolerantStrategy tolerantStrategy
+                        = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+                rpcResponse = tolerantStrategy.doTolerant(null, e);
+            }
+
             return rpcResponse.getData();
         } catch (Exception e) {
             throw new RuntimeException("调用失败");

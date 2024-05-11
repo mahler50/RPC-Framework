@@ -1,0 +1,2 @@
+failFast=com.whn.guazirpc.fault.tolerant.FailFastTolerantStrategy
+failSafe=com.whn.guazirpc.fault.tolerant.FailSafeTolerantStrategy
