@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: guazi-rpc-consumer
+rpc:
+  name: guazi-rpc
+  serverHost: localhost
+  serverPort: 9999
+  version: 1.0.0
+  mock: false
+  serializer: hessian
+  loadBalancer: roundRobin
+  retryStrategy: fixedInterval
+  tolerantStrategy: failFast
+  registryConfig:
+    registry: etcd
+    address: http://localhost:2380
+  
